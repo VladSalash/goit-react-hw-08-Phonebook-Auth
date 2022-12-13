@@ -1,0 +1,18 @@
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+
+export const Form = styled(NavLink)`
+  width: 320px;
+`;
+
+export const Link = styled(NavLink)`
+  display: inline-block;
+  text-decoration: none;
+  padding: 12px;
+  font-weight: 700;
+  color: #2a363b;
+
+  .active {
+    color: #e84a5f;
+  }
+`;
