@@ -1,10 +1,15 @@
 import { Link } from './AuthNav.styled';
 
-export const AuthNav = () => {
+const AuthNav = () => {
   return (
-    <div>
-      <Link to="/register">Register</Link>
-      <Link to="/login">Log In</Link>
-    </div>
+    <>
+      <li>
+        <Link to="/signIn">Sign In</Link>
+      </li>
+      <li>
+        <Link to="/signUp">Sign Up</Link>
+      </li>
+    </>
   );
 };
+export default AuthNav;

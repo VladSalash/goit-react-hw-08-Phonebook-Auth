@@ -1,10 +1,10 @@
-import { useDeleteContactMutation } from 'redux/contacts/contactsAPI';
+import { useDeleteContactMutation } from 'services/PhoneBook';
 import PropTypes from 'prop-types';
 
 import useVisibleItem from 'hooks/useVisibleItem';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import settingsAnimation from './helpers/settingsAnimation';
+import { listItemVariants } from './helpers/settingsAnimation';
 import { Button } from './ContactItem.styled';
 
 const ContactItem = ({ id, name, number }) => {
@@ -15,14 +15,16 @@ const ContactItem = ({ id, name, number }) => {
     <AnimatePresence>
       {isVisible && (
         <motion.li
-          variants={settingsAnimation}
+          variants={listItemVariants}
           initial="hidden"
           animate="visible"
           exit="hidden"
           onClick={handleVisible}
           key={id}
         >
-          <b>{name}</b>: {number}
+          <p>
+            <b>{name}</b>: {number}
+          </p>
           <Button type="button" onClick={() => deleteContact(id)}>
             Delete
           </Button>

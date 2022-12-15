@@ -1,18 +1,37 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-export const Form = styled(NavLink)`
-  width: 320px;
+export const List = styled.ul`
+  display: flex;
+  align-items: center;
+  list-style: none;
+`;
+export const Item = styled.li`
+  text-align: center;
+  margin-right: 20px;
+
+  border-radius: 10px;
+  transition: transform 150ms linear;
+
+  :nth-child(3) {
+    margin-left: auto;
+  }
+
+  :last-child {
+    margin: 0;
+  }
 `;
 
 export const Link = styled(NavLink)`
-  display: inline-block;
-  text-decoration: none;
-  padding: 12px;
-  font-weight: 700;
-  color: #2a363b;
+  opacity: 0.6;
+  font-size: 20px;
+  transition: opacity 150ms linear;
 
-  .active {
-    color: #e84a5f;
+  :hover {
+    opacity: 1;
+  }
+
+  :active {
+    opacity: 1;
   }
 `;

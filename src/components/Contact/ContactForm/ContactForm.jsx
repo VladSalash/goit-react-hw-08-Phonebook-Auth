@@ -1,77 +1,91 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import {
-  useGetContactsQuery,
+  useFetchContactsQuery,
   useAddContactMutation,
-} from 'redux/contacts/contactsAPI';
+} from 'services/PhoneBook';
+
+import { Loader } from 'components/Loader/Loader';
+
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Loader from '../Loader/Loader';
 import { Wrapper, Input, Label, Span, Button } from './ContactForm.styled';
 
+const schema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  number: Yup.string()
+    .required('This field is Required')
+    .matches(
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+      'Phone number is not valid'
+    ),
+});
+
 function ContactForm() {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const onNameChange = event => setName(event.target.value);
-  const onNumberChange = event => setNumber(event.target.value);
-
-  const { data: contacts } = useGetContactsQuery();
+  const { data: contacts } = useFetchContactsQuery();
   const [addContact, { isLoading }] = useAddContactMutation();
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      number: '',
+    },
+    onSubmit: async ({ name, number }, { resetForm }) => {
+      resetForm();
+      try {
+        if (alreadyInContacts) {
+          return toast.warn(`${name} is already in 📱`);
+        } else {
+          await addContact({ name, number });
+          return toast.success(`${name} added in your 📱`);
+        }
+      } catch (error) {
+        console.log(error);
+        return toast.error('Ooops..., something went wrong, try again later');
+      }
+    },
+    validationSchema: schema,
+  });
+
+  const { name } = formik.values;
 
   const alreadyInContacts = useMemo(() => {
     return contacts?.find(contact => contact.name === name);
-  }, [name, contacts]);
-
-  const handleSubmit = async event => {
-    event.preventDefault();
-
-    reset();
-
-    try {
-      if (alreadyInContacts) {
-        return toast.warn(`${name} is already in 📱`);
-      } else {
-        await addContact({ name, number });
-        return toast.success(`${name} added in your 📱`);
-      }
-    } catch (error) {
-      console.log(error);
-      return toast.error('Ooops..., something went wrong, try again later');
-    }
-  };
-
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+  }, [contacts, name]);
 
   return (
-    <Wrapper onSubmit={handleSubmit}>
+    <Wrapper onSubmit={formik.handleSubmit}>
       <Label>
         <Span>First Name</Span>
         <Input
+          name="name"
+          onChange={formik.handleChange}
+          value={formik.values.name}
           type="text"
-          name="name "
-          value={name}
-          onChange={onNameChange}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
+          placeholder="Name"
         />
       </Label>
       <Label>
         <Span>Phone Number</Span>
         <Input
-          type="tel"
           name="number"
-          value={number}
-          onChange={onNumberChange}
+          onChange={formik.handleChange}
+          value={formik.values.number}
+          type="tel"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
+          placeholder="Number"
         />
       </Label>
 

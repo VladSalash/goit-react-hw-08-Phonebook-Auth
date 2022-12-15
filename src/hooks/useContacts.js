@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-
-import { selectFilter } from 'redux/contacts/selectors';
-
-import { useGetContactsQuery } from 'redux/contacts/contactsAPI';
-
 import { createSelector } from '@reduxjs/toolkit';
 
+import contactSelectors from 'redux/contacts/contactSelectors';
+
+import { useFetchContactsQuery } from 'services/PhoneBook';
+
 const useContacts = () => {
-  const filter = useSelector(selectFilter);
+  const filter = useSelector(contactSelectors.getFilter);
 
   const selectFilteredContacts = useMemo(() => {
     return createSelector(
@@ -23,7 +22,7 @@ const useContacts = () => {
     );
   }, []);
 
-  return useGetContactsQuery(undefined, {
+  return useFetchContactsQuery(undefined, {
     selectFromResult(result) {
       return {
         ...result,

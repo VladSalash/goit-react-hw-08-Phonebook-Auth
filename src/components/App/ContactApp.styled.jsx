@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 600px;
+  /* width: 600px;
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -16,7 +16,7 @@ export const Container = styled.div`
   backdrop-filter: blur(10px);
   box-shadow: 40px 40px 40px 40px rgba(0, 0, 0, 0.2);
   text-align: center;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out; */
 `;
 export const Item = styled.li`
   list-style: none;
