@@ -10,7 +10,7 @@ import ContactForm from 'components/Contact/ContactForm/ContactForm';
 import contactSelectors from 'redux/contacts/contactSelectors';
 
 function ContactsPage() {
-  const isLoading = useSelector(contactSelectors);
+  const isLoading = useSelector(contactSelectors.getFilter);
 
   return (
     <>
