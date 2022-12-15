@@ -46,8 +46,8 @@ export const SignUpForm = () => {
     },
     onSubmit: async ({ name, email, password }, { resetForm }) => {
       try {
-        await signUpUser({ name, email, password });
-        // dispatch(signUp(data));
+        const { data } = await signUpUser({ name, email, password });
+        dispatch(signUp(data));
       } catch (error) {
         console.log(error);
         toast.error('Try to enter another name or email');

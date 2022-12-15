@@ -29,8 +29,8 @@ const schema = Yup.object().shape({
 
 export const SignInForm = () => {
   const [type, handlePasswordToggle] = useShowPassword();
-  const { data: signIn } = useSignInUserMutation();
-  // const dispatch = useDispatch();
+  const [signInUser] = useSignInUserMutation();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -39,9 +39,8 @@ export const SignInForm = () => {
     },
     onSubmit: async ({ email, password }, { resetForm }) => {
       try {
-        const { data } = await signIn({ email, password });
-        // signIn(data);
-        // dispatch(signIn(data));
+        const { data } = await signInUser({ email, password });
+        dispatch(signIn(data));
       } catch (error) {
         console.log(error);
         toast.error('Wrong email or password!');
