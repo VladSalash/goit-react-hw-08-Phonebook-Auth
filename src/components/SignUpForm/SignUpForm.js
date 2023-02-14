@@ -46,7 +46,7 @@ export const SignUpForm = () => {
     },
     onSubmit: async ({ name, email, password }, { resetForm }) => {
       try {
-        const { data } = await signUpUser({ name, email, password });
+        const { data } = await signUpUser({ name, email, password }).unwrap();
         dispatch(signUp(data));
       } catch (error) {
         console.log(error);
