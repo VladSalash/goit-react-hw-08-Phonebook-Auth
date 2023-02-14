@@ -58,6 +58,7 @@ export const SignUpForm = () => {
   });
 
   const { email, password } = formik.values;
+  
 
   const handleClick = () => {
     if (email === '' || password === '') {
