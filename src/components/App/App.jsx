@@ -4,7 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { AnimatePresence } from 'framer-motion';
 
-import { useAuthRefreshQuery } from 'services/PhoneBook';
+import { useAuthRefreshQuery } from 'services/phoneBookApi';
 
 import PrivateRoute from '../Routes/PrivateRoute';
 import RestrictedRoute from '../Routes/RestrictedRoute';

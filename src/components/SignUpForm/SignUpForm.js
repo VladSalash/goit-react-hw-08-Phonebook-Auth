@@ -14,7 +14,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { BsEye } from 'react-icons/bs';
 import { BsEyeSlash } from 'react-icons/bs';
 
-import { useSignUpUserMutation } from 'services/PhoneBook';
+import { useSignUpUserMutation } from 'services/phoneBookApi';
 import useShowPassword from 'hooks/useShowPassword';
 import { signUp } from 'redux/auth/authSlice';
 

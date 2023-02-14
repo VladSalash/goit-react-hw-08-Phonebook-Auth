@@ -1,4 +1,4 @@
-import { useDeleteContactMutation } from 'services/PhoneBook';
+import { useDeleteContactMutation } from 'services/phoneBookApi';
 import PropTypes from 'prop-types';
 
 import useVisibleItem from 'hooks/useVisibleItem';

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import {
   useFetchContactsQuery,
   useAddContactMutation,
-} from 'services/PhoneBook';
+} from 'services/phoneBookApi';
 
 import { Loader } from 'components/Loader/Loader';
 

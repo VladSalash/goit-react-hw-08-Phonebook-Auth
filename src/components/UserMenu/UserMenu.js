@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 
 import authSelectors from 'redux/auth/authSelectors';
-import { useSignOutUserMutation } from 'services/PhoneBook';
+import { useSignOutUserMutation } from 'services/phoneBookApi';
 import { signOut } from 'redux/auth/authSlice';
 
 import { FiUser } from 'react-icons/fi';

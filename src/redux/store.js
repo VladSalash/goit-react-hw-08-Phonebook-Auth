@@ -10,7 +10,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { phoneBookApi } from 'services/PhoneBook';
+import { phoneBookApi } from 'services/phoneBookApi';
 import { configureStore } from '@reduxjs/toolkit';
 
 import { filterSlice } from 'redux/contacts/filterSlice';
@@ -22,14 +22,6 @@ const authPersistConfig = {
   whitelist: ['token'],
 };
 
-const middleware = getDefaultMiddleware => [
-  ...getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
-  phoneBookApi.middleware,
-];
 
 export const store = configureStore({
   reducer: {
@@ -37,10 +29,15 @@ export const store = configureStore({
     [filterSlice.name]: filterSlice.reducer,
     [authSlice.name]: persistReducer(authPersistConfig, authSlice.reducer),
   },
-  middleware,
+  middleware: (gDM) => gDM({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }).concat(phoneBookApi.middleware),
   devTools: process.env.NODE_ENV === 'development',
 });
 
 setupListeners(store.dispatch);
 
 export const persistor = persistStore(store);
+

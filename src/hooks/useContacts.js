@@ -4,7 +4,7 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import contactSelectors from 'redux/contacts/contactSelectors';
 
-import { useFetchContactsQuery } from 'services/PhoneBook';
+import { useFetchContactsQuery } from 'services/phoneBookApi';
 
 const useContacts = () => {
   const filter = useSelector(contactSelectors.getFilter);
