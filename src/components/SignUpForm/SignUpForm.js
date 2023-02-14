@@ -58,9 +58,9 @@ export const SignUpForm = () => {
   });
 
   const { email, password } = formik.values;
-  
 
-  const handleClick = () => {
+
+const handleClick = () => {
     if (email === '' || password === '') {
       return toast.info(`Form fields must be completed`);
     }
